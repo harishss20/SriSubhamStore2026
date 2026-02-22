@@ -1,0 +1,44 @@
+[
+  {
+    "id": "milk-1",
+    "name": "Fresh Cow Milk",
+    "description": "Pure, farm-fresh cow milk delivered daily. Rich in calcium and protein.",
+    "price": 60,
+    "images": ["/products/milk-1-front.jpg", "/products/milk-1-back.jpg"]
+  },
+  {
+    "id": "milk-2",
+    "name": "Organic Whole Milk",
+    "description": "Certified organic whole milk. No additives, pure goodness.",
+    "price": 90,
+    "images": ["/products/milk-2-front.jpg", "/products/milk-2-back.jpg"]
+  },
+  {
+    "id": "milk-3",
+    "name": "Toned Milk",
+    "description": "Low-fat toned milk. Healthy choice for the family.",
+    "price": 55,
+    "images": ["/products/milk-3-front.jpg", "/products/milk-3-back.jpg"]
+  },
+  {
+    "id": "butter-1",
+    "name": "Fresh White Butter",
+    "description": "Traditional churned butter. Perfect for parathas and cooking.",
+    "price": 120,
+    "images": ["/products/butter-1-front.jpg", "/products/butter-1-back.jpg"]
+  },
+  {
+    "id": "butter-2",
+    "name": "Salted Butter",
+    "description": "Creamy salted butter. Great for toast and baking.",
+    "price": 140,
+    "images": ["/products/butter-2-front.jpg", "/products/butter-2-back.jpg"]
+  },
+  {
+    "id": "butter-3",
+    "name": "Homemade Ghee",
+    "description": "Pure clarified butter. Traditional Indian ghee.",
+    "price": 180,
+    "images": ["/products/butter-3-front.jpg", "/products/butter-3-back.jpg"]
+  }
+]
