@@ -1,10 +1,15 @@
 [
   {
-    "id": "milk-1",
-    "name": "Fresh Cow Milk",
-    "description": "Pure, farm-fresh cow milk delivered daily. Rich in calcium and protein.",
+    "id": "Curd-500ml",
+    "name": "Aavin Curd - 500ml",
+    "description": "Aavin Curd - 500ml FAT 3.0% | SNF 8.5%",
     "price": 60,
-    "images": ["/products/milk-1-front.jpg", "/products/milk-1-back.jpg"]
+    "images": [
+      "/products/curd1.png",
+      "/products/curd2.png",
+      "/products/curd3.jpeg",
+      "/products/curd4.jpeg"
+    ]
   },
   {
     "id": "milk-2",
