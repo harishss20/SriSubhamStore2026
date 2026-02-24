@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import type { Product } from "@/types";
 import { resolveImageUrl } from "@/lib/utils";
+import { useState } from "react";
 
 interface ProductSliderProps {
   products: Product[];
@@ -32,7 +32,7 @@ export function ProductSlider({ products }: ProductSliderProps) {
           key={current}
           src={resolveImageUrl(slide.img)}
           alt={slide.product.name}
-          className="w-full h-full object-cover animate-[fade-in_0.4s_ease-out]"
+          className="w-full h-full animate-[fade-in_0.4s_ease-out]"
         />
       </div>
       <button

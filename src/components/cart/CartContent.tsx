@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { useCartStore } from "@/store";
-import { useAuth } from "@/hooks/useAuth";
 import { formatPrice, resolveImageUrl } from "@/lib/utils";
-import { Button } from "@/components/ui";
+
 import { AuthForm } from "./AuthForm";
+import { Button } from "@/components/ui";
+import Link from "next/link";
 import { ROUTES } from "@/lib/constants";
+import { useAuth } from "@/hooks/useAuth";
+import { useCartStore } from "@/store";
+import { useState } from "react";
 
 export function CartContent() {
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
@@ -35,7 +36,7 @@ export function CartContent() {
         <div className="rounded-2xl border border-zinc-200/80 bg-white p-8 shadow-lg shadow-zinc-200/50">
           <AuthForm
             mode={authMode}
-            onSuccess={() => {}}
+            onSuccess={() => { }}
             onSwitchMode={setAuthMode}
           />
         </div>
@@ -81,7 +82,7 @@ export function CartContent() {
               <img
                 src={resolveImageUrl(item.images?.[0] ?? "")}
                 alt={item.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full"
               />
             </div>
             <div className="flex-1 min-w-0">

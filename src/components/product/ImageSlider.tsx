@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { resolveImageUrl } from "@/lib/utils";
+import { useState } from "react";
 
 interface ImageSliderProps {
   images: string[];
@@ -26,7 +26,7 @@ export function ImageSlider({ images, alt, className = "" }: ImageSliderProps) {
         src={resolveImageUrl(img)}
         alt={`${alt} - image ${current + 1}`}
         key={current}
-        className="size-full object-cover animate-[fade-in_0.3s_ease-out]"
+        className="size-full animate-[fade-in_0.3s_ease-out]"
       />
       {total > 1 && (
         <>

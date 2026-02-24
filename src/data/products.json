@@ -12,18 +12,18 @@
     ]
   },
   {
-    "id": "milk-2",
-    "name": "Organic Whole Milk",
-    "description": "Certified organic whole milk. No additives, pure goodness.",
-    "price": 90,
-    "images": ["/products/milk-2-front.jpg", "/products/milk-2-back.jpg"]
+    "id": "butter-milk",
+    "name": "Butter Milk",
+    "description": "Pure Butter Milk",
+    "price": 5,
+    "images": ["/products/buttermilk2.jpeg", "/products/buttermilk1.png","/products/buttermilk3.jpeg"]
   },
   {
-    "id": "milk-3",
-    "name": "Toned Milk",
+    "id": "tea-mate",
+    "name": "Tea Mate",
     "description": "Low-fat toned milk. Healthy choice for the family.",
-    "price": 55,
-    "images": ["/products/milk-3-front.jpg", "/products/milk-3-back.jpg"]
+    "price": 34,
+    "images": ["/products/teaMate1.png", "/products/teaMate2.png"]
   },
   {
     "id": "butter-1",
