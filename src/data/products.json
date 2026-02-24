@@ -16,34 +16,51 @@
     "name": "Butter Milk",
     "description": "Pure Butter Milk",
     "price": 5,
-    "images": ["/products/buttermilk2.jpeg", "/products/buttermilk1.png","/products/buttermilk3.jpeg"]
+    "images": [
+      "/products/buttermilk2.jpeg",
+      "/products/buttermilk1.png",
+      "/products/buttermilk3.jpeg"
+    ]
   },
   {
     "id": "tea-mate",
     "name": "Tea Mate",
     "description": "Low-fat toned milk. Healthy choice for the family.",
     "price": 34,
-    "images": ["/products/teaMate1.png", "/products/teaMate2.png"]
+    "images": [
+      "/products/teaMate1.png",
+      "/products/teaMate2.png",
+      "/products/teaMate3.jpeg"
+    ]
   },
   {
     "id": "butter-1",
     "name": "Fresh White Butter",
     "description": "Traditional churned butter. Perfect for parathas and cooking.",
     "price": 120,
-    "images": ["/products/butter-1-front.jpg", "/products/butter-1-back.jpg"]
+    "images": [
+      "/products/butter-1-front.jpg",
+      "/products/butter-1-back.jpg"
+    ]
   },
   {
     "id": "butter-2",
     "name": "Salted Butter",
     "description": "Creamy salted butter. Great for toast and baking.",
     "price": 140,
-    "images": ["/products/butter-2-front.jpg", "/products/butter-2-back.jpg"]
+    "images": [
+      "/products/butter-2-front.jpg",
+      "/products/butter-2-back.jpg"
+    ]
   },
   {
     "id": "butter-3",
     "name": "Homemade Ghee",
     "description": "Pure clarified butter. Traditional Indian ghee.",
     "price": 180,
-    "images": ["/products/butter-3-front.jpg", "/products/butter-3-back.jpg"]
+    "images": [
+      "/products/butter-3-front.jpg",
+      "/products/butter-3-back.jpg"
+    ]
   }
 ]
