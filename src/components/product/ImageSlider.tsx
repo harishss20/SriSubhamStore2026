@@ -28,14 +28,14 @@ export function ImageSlider({
   const prev = () => setCurrent((c) => (c - 1 + total) % total);
 
   useEffect(() => {
-    if (total <= 1 || isHovered) return;
+    if (total <= 1 || isHovered || isZoomOpen) return;
 
     const interval = setInterval(() => {
       setCurrent((c) => (c + 1) % total);
     }, autoSlideInterval);
 
     return () => clearInterval(interval);
-  }, [total, autoSlideInterval, isHovered]);
+  }, [total, autoSlideInterval, isHovered, isZoomOpen]);
 
   if (!images.length) return null;
 
@@ -98,33 +98,51 @@ export function ImageSlider({
         )}
       </div>
 
-    {isZoomOpen &&
-  typeof window !== "undefined" &&
-  createPortal(
-    <div
-      className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center"
-      onClick={() => setIsZoomOpen(false)}
-    >
-      <div
-        className="relative w-full max-w-3xl h-[80vh] flex items-center justify-center p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <img
-          src={resolveImageUrl(images[current])}
-          alt={`${alt} zoom`}
-          className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
-        />
+      {isZoomOpen &&
+        typeof window !== "undefined" &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center"
+            onClick={() => setIsZoomOpen(false)}
+          >
+            <div
+              className="relative w-full max-w-3xl h-[80vh] flex items-center justify-center p-6"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={resolveImageUrl(images[current])}
+                alt={`${alt} zoom`}
+                className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
+              />
 
-        <button
-          onClick={() => setIsZoomOpen(false)}
-          className="absolute top-4 right-4 bg-white text-black w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition"
-        >
-          ✕
-        </button>
-      </div>
-    </div>,
-    document.body
-  )}
+              <button
+                onClick={() => setIsZoomOpen(false)}
+                className="absolute top-4 right-4 bg-white text-black w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition"
+              >
+                ✕
+              </button>
+
+              {total > 1 && (
+                <>
+                  <button
+                    onClick={prev}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition"
+                  >
+                    ←
+                  </button>
+
+                  <button
+                    onClick={next}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition"
+                  >
+                    →
+                  </button>
+                </>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 }
