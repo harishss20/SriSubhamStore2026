@@ -1,13 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { ProductCard, ProductSlider } from "@/components/product";
+
 import Link from "next/link";
-import type { Product } from "@/types";
-import { ProductSlider, ProductCard } from "@/components/product";
 import { Modal } from "@/components/ui";
-import { useCartStore } from "@/store";
-import { useAuth } from "@/hooks/useAuth";
+import type { Product } from "@/types";
 import { ROUTES } from "@/lib/constants";
+import { useAuth } from "@/hooks/useAuth";
+import { useCartStore } from "@/store";
+import { useState } from "react";
 
 interface LandingContentProps {
   products: Product[];
@@ -27,6 +28,99 @@ const FEATURES: Feature[] = [
   { icon: "🌾", title: "Farm Direct", desc: "Straight from local farms" },
   { icon: "✓", title: "100% Pure", desc: "No additives ever" },
 ];
+
+const heroSection = [
+  {
+    "id": "Aavin-Delite-500ml",
+    "name": "Aavin Delite 500ml",
+    "description": "*Aavin Delite (500 ml)* is a refreshing, mildly sweet flavoured milk drink, perfect for quick energy and everyday refreshment.",
+    "price": 22,
+    "images": [
+      "/products/delite1.jpeg"
+    ]
+  },
+  {
+    "id": "Aavin-Gold-500ml",
+    "name": "Aavin Gold 500ml",
+    "description": "*Aavin Gold (500 ml)* is rich, creamy full-cream milk for daily use.",
+    "price": 28,
+    "images": [
+      "/products/gold1.png"
+    ]
+  },
+  {
+    "id": "tea-mate",
+    "name": "Tea Mate",
+    "description": "Low-fat toned milk. Healthy choice for the family.",
+    "price": 34,
+    "images": [
+      "/products/teaMate1.png"
+    ]
+  },
+  {
+    "id": "Curd-500ml",
+    "name": "Aavin Curd - 500ml",
+    "description": "Aavin Curd - 500ml FAT 3.0% | SNF 8.5%",
+    "price": 35,
+    "images": [
+      "/products/curd1.png"
+    ]
+  },
+  {
+    "id": "aavin-butter-milk-140ml",
+    "name": "Aavin Butter Milk 140ml",
+    "description": "*Aavin Buttermilk* is a refreshing, spiced milk drink for cooling hydration.",
+    "price": 5,
+    "images": [
+      "/products/buttermilk2.jpeg"
+    ]
+  },
+  {
+    "id": "Aavin-Ghee-500ml",
+    "name": "Aavin Ghee 500ml",
+    "description": "*Aavin Ghee* is pure, aromatic clarified butter made from quality milk, perfect for cooking, sweets, and traditional dishes.",
+    "price": 365,
+    "images": [
+      "/products/ghee1.png"
+    ]
+  },
+  {
+    "id": "Aavin-Paneer",
+    "name": "Aavin Panner 200g",
+    "description": "Aavin Paneer is a fresh, soft cottage cheese made from high-quality milk.",
+    "price": 110,
+    "images": [
+      "/products/paneer1.png"
+    ]
+  },
+  {
+    "id": "Aavin-khova",
+    "name": "Aavin Milk Khova 200g",
+    "description": "*Aavin Khova* is a rich, creamy milk product made from pure milk, ideal for preparing traditional sweets and desserts.",
+    "price": 110,
+    "images": [
+      "/products/khova1.png"
+    ]
+  },
+  {
+    "id": "Aavin-Mysorepa-250gm",
+    "name": "Aavin Mysorepa 250gm",
+    "description": "*Aavin Mysorepa* is a rich, soft traditional sweet made with quality ingredients, offering a melt-in-the-mouth taste perfect for festive moments.",
+    "price": 140,
+    "images": [
+      "/products/mysoopa1.png"
+    ]
+  },
+  {
+    "id": "Aavin-Gulab-Jamun",
+    "name": "Aavin Gulab Jamun 3g",
+    "description": "*Aavin Gulab Jamun* is a soft, rich traditional sweet made from quality milk solids, perfect for desserts and celebrations.",
+    "price": 50,
+    "images": [
+      "/products/gb2.png"
+    ]
+  }
+]
 
 export function LandingContent({ products }: LandingContentProps) {
   const [buyModalOpen, setBuyModalOpen] = useState(false);
@@ -80,7 +174,7 @@ export function LandingContent({ products }: LandingContentProps) {
               <div className="relative mx-auto max-w-lg">
                 <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-[#3D9AC3]/20 to-transparent blur-2xl" />
                 <div className="relative overflow-hidden rounded-3xl border-2 border-white/80 bg-white/90 shadow-2xl shadow-zinc-300/50 backdrop-blur-sm ring-1 ring-zinc-200/50">
-                  <ProductSlider products={products} />
+                  <ProductSlider products={heroSection} />
                   <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                 </div>
               </div>
