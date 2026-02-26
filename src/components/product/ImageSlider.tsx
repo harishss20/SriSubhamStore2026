@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 
+import { createPortal } from "react-dom";
 import { resolveImageUrl } from "@/lib/utils";
 
 interface ImageSliderProps {
@@ -97,48 +98,33 @@ export function ImageSlider({
         )}
       </div>
 
-      {isZoomOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6"
+    {isZoomOpen &&
+  typeof window !== "undefined" &&
+  createPortal(
+    <div
+      className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center"
+      onClick={() => setIsZoomOpen(false)}
+    >
+      <div
+        className="relative w-full max-w-3xl h-[80vh] flex items-center justify-center p-6"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <img
+          src={resolveImageUrl(images[current])}
+          alt={`${alt} zoom`}
+          className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
+        />
+
+        <button
           onClick={() => setIsZoomOpen(false)}
+          className="absolute top-4 right-4 bg-white text-black w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition"
         >
-          <div
-            className="relative max-w-5xl w-full max-h-[90vh]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={resolveImageUrl(images[current])}
-              alt={`${alt} zoom`}
-              className="w-full h-full object-contain rounded-lg"
-            />
-
-            <button
-              onClick={() => setIsZoomOpen(false)}
-              className="absolute top-3 right-3 bg-white text-black w-9 h-9 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition"
-            >
-              ✕
-            </button>
-
-            {total > 1 && (
-              <>
-                <button
-                  onClick={prev}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition"
-                >
-                  ←
-                </button>
-
-                <button
-                  onClick={next}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition"
-                >
-                  →
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      )}
+          ✕
+        </button>
+      </div>
+    </div>,
+    document.body
+  )}
     </>
   );
 }
