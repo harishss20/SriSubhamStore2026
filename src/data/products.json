@@ -1,25 +1,24 @@
 [
   {
-    "id": "Curd-500ml",
-    "name": "Aavin Curd - 500ml",
-    "description": "Aavin Curd - 500ml FAT 3.0% | SNF 8.5%",
-    "price": 60,
+    "id": "Aavin-Delite-500ml",
+    "name": "Aavin Delite 500ml",
+    "description": "*Aavin Delite (500 ml)* is a refreshing, mildly sweet flavoured milk drink, perfect for quick energy and everyday refreshment.",
+    "price": 22,
     "images": [
-      "/products/curd1.png",
-      "/products/curd2.png",
-      "/products/curd3.jpeg",
-      "/products/curd4.jpeg"
+      "/products/delite1.jpeg",
+      "/products/de2.jpeg",
+      "/products/de3.jpeg"
     ]
   },
   {
-    "id": "butter-milk",
-    "name": "Butter Milk",
-    "description": "Pure Butter Milk",
-    "price": 5,
+    "id": "Aavin-Gold-500ml",
+    "name": "Aavin Gold 500ml",
+    "description": "*Aavin Gold (500 ml)* is rich, creamy full-cream milk for daily use.",
+    "price": 28,
     "images": [
-      "/products/buttermilk2.jpeg",
-      "/products/buttermilk1.png",
-      "/products/buttermilk3.jpeg"
+      "/products/gold1.png",
+      "/products/gold2.jpeg",
+      "/products/gold3.jpeg"
     ]
   },
   {
@@ -34,33 +33,85 @@
     ]
   },
   {
-    "id": "butter-1",
-    "name": "Fresh White Butter",
-    "description": "Traditional churned butter. Perfect for parathas and cooking.",
-    "price": 120,
+    "id": "Curd-500ml",
+    "name": "Aavin Curd - 500ml",
+    "description": "Aavin Curd - 500ml FAT 3.0% | SNF 8.5%",
+    "price": 35,
     "images": [
-      "/products/butter-1-front.jpg",
-      "/products/butter-1-back.jpg"
+      "/products/curd1.png",
+      "/products/curd2.png",
+      "/products/curd3.jpeg",
+      "/products/curd4.jpeg"
     ]
   },
   {
-    "id": "butter-2",
-    "name": "Salted Butter",
-    "description": "Creamy salted butter. Great for toast and baking.",
+    "id": "aavin-butter-milk-140ml",
+    "name": "Aavin Butter Milk 140ml",
+    "description": "*Aavin Buttermilk* is a refreshing, spiced milk drink for cooling hydration.",
+    "price": 5,
+    "images": [
+      "/products/buttermilk2.jpeg",
+      "/products/buttermilk1.png",
+      "/products/buttermilk3.jpeg"
+    ]
+  },
+    {
+    "id": "Aavin-Ghee-500ml",
+    "name": "Aavin Ghee 500ml",
+    "description": "*Aavin Ghee* is pure, aromatic clarified butter made from quality milk, perfect for cooking, sweets, and traditional dishes.",
+    "price": 365,
+    "images": [
+      "/products/ghee1.png",
+      "/products/ghee2.png",
+      "/products/ghee3.png",
+      "/products/ghee4.png"
+    ]
+  },
+  {
+    "id": "Aavin-Paneer",
+    "name": "Aavin Panner 200g",
+    "description": "Aavin Paneer is a fresh, soft cottage cheese made from high-quality milk.",
+    "price": 110,
+    "images": [
+      "/products/paneer1.png",
+      "/products/paneer2.png",
+      "/products/paneer3.jpeg",
+      "/products/paneer4.jpeg"
+    ]
+  },
+  {
+    "id": "Aavin-khova",
+    "name": "Aavin Milk Khova 200g",
+    "description": "*Aavin Khova* is a rich, creamy milk product made from pure milk, ideal for preparing traditional sweets and desserts.",
+    "price": 110,
+    "images": [
+      "/products/khova1.png",
+      "/products/khova2.png",
+      "/products/Khova3.png",
+      "/products/khova4.png",
+      "/products/khova5.png",
+      "/products/khova6.png"
+    ]
+  },
+  {
+    "id": "Aavin-Gulab-Jamun",
+    "name": "Aavin Gulab Jamun 3g",
+    "description": "*Aavin Gulab Jamun* is a soft, rich traditional sweet made from quality milk solids, perfect for desserts and celebrations.",
+    "price": 50,
+    "images": [
+      "/products/gb2.png",
+      "/products/gb3.png",
+      "/products/gb1.jpeg"
+    ]
+  },
+  {
+    "id": "Aavin-Mysorepa-250gm",
+    "name": "Aavin Mysorepa 250gm",
+    "description": "*Aavin Mysorepa* is a rich, soft traditional sweet made with quality ingredients, offering a melt-in-the-mouth taste perfect for festive moments.",
     "price": 140,
     "images": [
-      "/products/butter-2-front.jpg",
-      "/products/butter-2-back.jpg"
-    ]
-  },
-  {
-    "id": "butter-3",
-    "name": "Homemade Ghee",
-    "description": "Pure clarified butter. Traditional Indian ghee.",
-    "price": 180,
-    "images": [
-      "/products/butter-3-front.jpg",
-      "/products/butter-3-back.jpg"
+      "/products/mysoopa1.png",
+      "/products/mysoopa2.png"
     ]
   }
 ]
