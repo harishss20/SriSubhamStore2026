@@ -25,8 +25,8 @@ const BUY_MODAL_MESSAGE =
 
 const FEATURES: Feature[] = [
   { icon: "🥛", title: "Fresh Daily", desc: "Sourced every morning" },
-  { icon: "🌾", title: "Farm Direct", desc: "Straight from local farms" },
-  { icon: "✓", title: "100% Pure", desc: "No additives ever" },
+  { icon: "🌾", title: "Direct Sourcing", desc: "Authorize delivery" },
+  { icon: "✓", title: "Time", desc: "Quick Delivery" },
 ];
 
 const heroSection = [
