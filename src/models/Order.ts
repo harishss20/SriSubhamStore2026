@@ -1,5 +1,4 @@
-import { Schema, model, models, Document, Types } from "mongoose";
-import { AddressSchema } from "./User";
+import { Schema, model, models, Document, Types } from "mongoose"; // use Schema.Types.ObjectId for refs
 
 const CartItemSchema = new Schema(
   {
@@ -14,7 +13,7 @@ export interface OrderDoc extends Document {
   user: Types.ObjectId;
   items: Array<{ product: Types.ObjectId; quantity: number; price: number }>;
   total: number;
-  shippingAddress: any;
+  shippingAddress: string;
   contactPhone?: string;
   status: string;
   createdAt: Date;
@@ -23,10 +22,10 @@ export interface OrderDoc extends Document {
 
 const OrderSchema = new Schema<OrderDoc>(
   {
-    user: { type: Types.ObjectId, ref: "User", required: true },
+    user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     items: [CartItemSchema],
     total: Number,
-    shippingAddress: AddressSchema,
+    shippingAddress: String,
     contactPhone: String,
     status: { type: String, default: "pending" },
   },
