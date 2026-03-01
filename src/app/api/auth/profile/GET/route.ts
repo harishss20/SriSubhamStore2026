@@ -13,7 +13,16 @@ export async function GET() {
   if (!payload) return NextResponse.json({ user: null });
 
   await connectToDatabase();
-  const user = await User.findById(payload.userId).lean();
+  // provide a concrete type for the returned document
+  type UserLean = {
+    _id: string;
+    email: string;
+    name?: string;
+    mobile?: string;
+    addresses: { _id: string; value: string }[];
+  };
+
+  const user = await User.findById(payload.userId).lean<UserLean>();
   if (!user) return NextResponse.json({ user: null });
 
   return NextResponse.json({
@@ -22,7 +31,7 @@ export async function GET() {
       email: user.email,
       name: user.name,
       mobile: user.mobile,
-      addresses: user.addresses.map(a => ({ _id: a._id, value: a.value })),
+      addresses: user.addresses.map((a) => ({ _id: a._id, value: a.value })),
     },
   });
 }
