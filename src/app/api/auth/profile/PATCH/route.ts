@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { verifyToken, COOKIE_NAME } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/db";
 import { User } from "@/models/User";
+import { Address } from "@/types";
 
 export async function PATCH(request: Request) {
   try {
@@ -27,16 +28,26 @@ export async function PATCH(request: Request) {
     if (address) {
       const value = typeof address === "string" ? address : JSON.stringify(address);
       if (addressId) {
+        // update existing address text
         const addr = user.addresses.id(addressId);
         if (addr) {
           addr.value = value;
         }
       } else {
+        // add new address
         user.addresses.push({ value });
       }
     }
     if (removeAddress && addressId) {
       user.addresses.id(addressId)?.remove();
+    }
+    if (body.defaultAddressId) {
+      // move selected address to front to represent default
+      const idx = user.addresses.findIndex((a: Address) => a._id?.toString() === body.defaultAddressId);
+      if (idx > -1) {
+        const [addr] = user.addresses.splice(idx, 1);
+        user.addresses.unshift(addr);
+      }
     }
 
     await user.save();

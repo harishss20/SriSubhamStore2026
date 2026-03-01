@@ -8,19 +8,28 @@ export async function POST(request: Request) {
   try {
     const cookieStore = await cookies();
     const token = cookieStore.get(COOKIE_NAME)?.value;
+    console.log("checkout token", token ? "present" : "missing");
     if (!token) return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
 
     const payload = await verifyToken(token);
-    if (!payload) return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
+    if (!payload) {
+      console.log("checkout invalid token");
+      return NextResponse.json({ success: false, error: "Unauthenticated" }, { status: 401 });
+    }
 
-    const { items, total, shippingAddress, contactPhone } = await request.json();
+    const body = await request.json();
+    console.log("checkout body", body);
+    const { items, total, shippingAddress, contactPhone } = body;
     if (!items || !total || !shippingAddress) {
+      console.log("checkout invalid data", body);
       return NextResponse.json({ success: false, error: "Invalid order data" }, { status: 400 });
     }
 
+    if (!process.env.MONGODB_URI) console.warn("checkout: no mongodb uri");
     await connectToDatabase();
 
-    const addrValue = typeof shippingAddress === "string" ? { value: shippingAddress } : shippingAddress;
+    // shippingAddress stored as simple string in schema
+    const addrValue = typeof shippingAddress === "string" ? shippingAddress : JSON.stringify(shippingAddress);
     const newOrder = await Order.create({
       user: payload.userId,
       items,
@@ -34,7 +43,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ success: true, orderId: newOrder._id });
   } catch (err) {
-    console.error(err);
+    console.error("checkout error", err);
     return NextResponse.json({ success: false, error: "Checkout failed" }, { status: 500 });
   }
 }
