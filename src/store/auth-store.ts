@@ -3,9 +3,17 @@
 import { create } from "zustand";
 
 export interface AuthState {
-  user: { email: string } | null;
+  user:
+    | {
+        id: string;
+        email: string;
+        name?: string;
+        mobile?: string;
+        addresses?: any[];
+      }
+    | null;
   loading: boolean;
-  setUser: (user: { email: string } | null) => void;
+  setUser: (user: AuthState["user"]) => void;
   setLoading: (loading: boolean) => void;
   logout: () => Promise<void>;
 }

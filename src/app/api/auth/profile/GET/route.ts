@@ -1,21 +1,16 @@
-import { COOKIE_NAME, verifyToken } from "@/lib/auth";
-
 import { NextResponse } from "next/server";
-import { User } from "@/models/User";
-import { connectToDatabase } from "@/lib/db";
 import { cookies } from "next/headers";
+import { verifyToken, COOKIE_NAME } from "@/lib/auth";
+import { connectToDatabase } from "@/lib/db";
+import { User } from "@/models/User";
 
 export async function GET() {
   const cookieStore = await cookies();
   const token = cookieStore.get(COOKIE_NAME)?.value;
-  if (!token) {
-    return NextResponse.json({ user: null });
-  }
+  if (!token) return NextResponse.json({ user: null });
 
   const payload = await verifyToken(token);
-  if (!payload) {
-    return NextResponse.json({ user: null });
-  }
+  if (!payload) return NextResponse.json({ user: null });
 
   await connectToDatabase();
   const user = await User.findById(payload.userId).lean();
@@ -27,7 +22,7 @@ export async function GET() {
       email: user.email,
       name: user.name,
       mobile: user.mobile,
-      addresses: user.addresses,
+      addresses: user.addresses.map(a => ({ _id: a._id, value: a.value })),
     },
   });
 }

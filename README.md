@@ -1,3 +1,40 @@
+# subham2026
+
+## Authentication & User Flow
+
+This project uses MongoDB (Atlas) for user storage and provides a modern
+authentication flow. Key features:
+
+- Signup with **email** & **password** plus optional **name**, **mobile**, and a
+  JSON-formatted **address**.
+- Passwords hashed using `bcryptjs`.
+- JWT stored in a secure httpOnly cookie, containing `userId` and `email`.
+- `/profile` page lets users view/edit name, mobile and manage multiple
+  addresses (CRUD).
+- `/cart/checkout` pre-fills saved contact/address data; user may edit or enter
+  a new address. The selected address is saved in the resulting order.
+- Orders are stored in MongoDB with a snapshot of the shipping address.
+
+**API routes** added:
+
+```
+POST /api/auth/signup
+POST /api/auth/login
+POST /api/auth/logout
+GET  /api/auth/session
+PATCH /api/auth/profile    (also handles address add/edit/remove)
+POST /api/checkout
+GET  /api/order/:id
+```
+
+**Required environment variables** in `.env.local`:
+
+```
+MONGODB_URI=your_connection_string  # e.g. mongodb+srv://user:password@cluster.mongodb.net/dbname
+                                     # make sure to replace any `<placeholders>`
+AUTH_SECRET=a_long_secret_for_jwt
+```
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started

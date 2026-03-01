@@ -52,13 +52,21 @@ export function Header() {
             </Link>
           ))}
           {isLoggedIn ? (
-            <button
-              type="button"
-              onClick={() => logout()}
-              className="ml-2 px-4 py-2 text-sm font-medium text-zinc-600 rounded-full transition-all duration-200 hover:text-[#3D9AC3] hover:bg-zinc-100"
-            >
-              Logout
-            </button>
+            <>
+              <Link
+                href={ROUTES.profile}
+                className="ml-2 px-4 py-2 text-sm font-medium text-zinc-600 rounded-full transition-all duration-200 hover:text-[#3D9AC3] hover:bg-zinc-100"
+              >
+                Profile
+              </Link>
+              <button
+                type="button"
+                onClick={() => logout()}
+                className="ml-2 px-4 py-2 text-sm font-medium text-zinc-600 rounded-full transition-all duration-200 hover:text-[#3D9AC3] hover:bg-zinc-100"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <Link
               href={ROUTES.cart}

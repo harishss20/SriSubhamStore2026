@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui";
+import { useState } from "react";
 
 type Mode = "login" | "signup";
 
@@ -14,6 +14,9 @@ interface AuthFormProps {
 export function AuthForm({ onSuccess, onSwitchMode, mode }: AuthFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [address, setAddress] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -23,20 +26,56 @@ export function AuthForm({ onSuccess, onSwitchMode, mode }: AuthFormProps) {
     setLoading(true);
 
     const url = mode === "login" ? "/api/auth/login" : "/api/auth/signup";
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-
-    setLoading(false);
-    if (!res.ok) {
-      setError(data.error ?? "Failed");
+    // basic client-side validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email");
+      setLoading(false);
       return;
     }
-    onSuccess();
-    window.location.reload();
+    if (mode === "signup") {
+      if (mobile && !/^\+?[1-9]\d{1,14}$/.test(mobile)) {
+        setError("Please enter a valid mobile number");
+        setLoading(false);
+        return;
+      }
+      const body: Record<string, unknown> = { email, password };
+      if (name) body.name = name;
+      if (mobile) body.mobile = mobile;
+      if (address) body.address = address; // now storing address string
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+
+      setLoading(false);
+      if (!res.ok) {
+        setError(data.error ?? "Failed");
+        return;
+      }
+      onSuccess();
+      window.location.reload();
+      return;
+    } else {
+      const body: Record<string, unknown> = { email, password };
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+
+      setLoading(false);
+      if (!res.ok) {
+        setError(data.error ?? "Failed");
+        return;
+      }
+      onSuccess();
+      window.location.reload();
+      return;
+    }
   };
 
   return (
@@ -67,6 +106,43 @@ export function AuthForm({ onSuccess, onSwitchMode, mode }: AuthFormProps) {
           className="w-full px-4 py-3 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-[#3D9AC3] focus:border-[#3D9AC3] transition-all duration-200 outline-none"
         />
       </div>
+      {mode === "signup" && (
+        <>
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-1">
+              Full Name (optional)
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-3 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-[#3D9AC3] focus:border-[#3D9AC3] transition-all duration-200 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-1">
+              Mobile Number (optional)
+            </label>
+            <input
+              type="tel"
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
+              className="w-full px-4 py-3 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-[#3D9AC3] focus:border-[#3D9AC3] transition-all duration-200 outline-none"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-zinc-700 mb-1">
+              Address (optional)
+            </label>
+            <textarea
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="123 Main St, City, Country"
+              className="w-full px-4 py-3 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-[#3D9AC3] focus:border-[#3D9AC3] transition-all duration-200 outline-none"
+            />
+          </div>
+        </>
+      )}
       {error && (
         <p className="text-sm text-red-600 animate-[fade-in_0.2s_ease-out]">
           {error}

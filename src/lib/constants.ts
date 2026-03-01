@@ -10,6 +10,8 @@ export const ROUTES = {
   cart: "/cart",
   login: "/login",
   signup: "/signup",
+  profile: "/profile",
+  checkout: "/cart/checkout",
 } as const;
 
 export const API_ROUTES = {
@@ -18,7 +20,9 @@ export const API_ROUTES = {
     signup: "/api/auth/signup",
     session: "/api/auth/session",
     logout: "/api/auth/logout",
+    profile: "/api/auth/profile",
   },
+  checkout: "/api/checkout",
 } as const;
 
 export const CLOUDINARY = {

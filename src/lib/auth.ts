@@ -14,17 +14,26 @@ export async function verifyPassword(password: string, hash: string): Promise<bo
   return bcrypt.compare(password, hash);
 }
 
-export async function createToken(email: string): Promise<string> {
-  return new SignJWT({ email })
+export async function createToken(payload: {
+  userId: string;
+  email: string;
+}): Promise<string> {
+  return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setExpirationTime("7d")
     .sign(SECRET);
 }
 
-export async function verifyToken(token: string): Promise<{ email: string } | null> {
+export async function verifyToken(token: string): Promise<
+  | { userId: string; email: string }
+  | null
+> {
   try {
     const { payload } = await jwtVerify(token, SECRET);
-    return { email: payload.email as string };
+    return {
+      userId: payload.userId as string,
+      email: payload.email as string,
+    };
   } catch {
     return null;
   }

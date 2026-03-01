@@ -68,7 +68,9 @@ export function CartContent() {
     <div className="container mx-auto px-4 animate-[fade-in_0.3s_ease-out]">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold tracking-tight text-zinc-900">Your Cart</h1>
-        <p className="text-sm text-zinc-500">Logged in as {user?.email}</p>
+        <p className="text-sm text-zinc-500">
+          Logged in as {user?.name ?? user?.email}
+        </p>
       </div>
       <div className="space-y-4">
         {items.map((item, i) => (
@@ -124,6 +126,11 @@ export function CartContent() {
         <p className="text-xl font-bold text-zinc-900">
           Total: {formatPrice(getTotalPrice())}
         </p>
+        <div className="mt-4">
+          <Link href="/cart/checkout">
+            <Button>Proceed to Checkout</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );

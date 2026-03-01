@@ -10,11 +10,17 @@ export interface CartItem extends Product {
   quantity: number;
 }
 
+export interface Address {
+  _id?: string;
+  value: string; // full address string
+}
+
 export interface User {
   id: string;
   email: string;
   name?: string;
-  image?: string;
+  mobile?: string;
+  addresses?: Address[];
   createdAt: string;
 }
 
@@ -22,7 +28,8 @@ export interface SessionUser {
   id: string;
   email: string;
   name?: string;
-  image?: string;
+  mobile?: string;
+  addresses?: Address[];
 }
 
 export interface ApiResponse<T = unknown> {
@@ -39,5 +46,7 @@ export interface LoginCredentials {
 
 export interface SignupCredentials extends LoginCredentials {
   name?: string;
+  mobile?: string;
+  address?: Address;
 }
 
