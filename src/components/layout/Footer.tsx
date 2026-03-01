@@ -21,22 +21,40 @@ export function Footer() {
           </div>
           <nav className="flex flex-wrap gap-6">
             <Link
-              href={ROUTES.home}
+              href={ROUTES.aboutUs}
               className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
             >
-              Home
+              About Us
             </Link>
             <Link
-              href={ROUTES.products}
+              href={ROUTES.contactUs}
               className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
             >
-              Products
+              Contact
             </Link>
             <Link
-              href={ROUTES.cart}
+              href={ROUTES.terms}
               className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
             >
-              Cart
+              Terms
+            </Link>
+            <Link
+              href={ROUTES.privacy}
+              className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
+            >
+              Privacy
+            </Link>
+            <Link
+              href={ROUTES.returns}
+              className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
+            >
+              Returns
+            </Link>
+            <Link
+              href={ROUTES.shipping}
+              className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
+            >
+              Shipping
             </Link>
           </nav>
         </div>

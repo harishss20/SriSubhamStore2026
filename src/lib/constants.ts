@@ -12,6 +12,13 @@ export const ROUTES = {
   signup: "/signup",
   profile: "/profile",
   checkout: "/cart/checkout",
+  orders: "/orders",
+  aboutUs: "/about-us",
+  contactUs: "/contact-us",
+  terms: "/terms",
+  privacy: "/privacy",
+  returns: "/returns",
+  shipping: "/shipping",
 } as const;
 
 export const API_ROUTES = {

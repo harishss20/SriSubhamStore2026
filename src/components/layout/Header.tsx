@@ -12,6 +12,7 @@ const navItems = [
   { href: ROUTES.home, label: "Home" },
   { href: ROUTES.products, label: "Products" },
   { href: ROUTES.cart, label: "Cart" },
+  { href: ROUTES.orders, label: "Orders" },
 ];
 
 export function Header() {

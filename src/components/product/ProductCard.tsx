@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import type { Product } from "@/types";
 import { cn, formatPrice } from "@/lib/utils";
+
 import { Button } from "@/components/ui";
 import { ImageSlider } from "./ImageSlider";
+import type { Product } from "@/types";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: Product;
@@ -72,17 +73,7 @@ export function ProductCard({
         >
           {added ? "Added ✓" : "Add"}
         </Button>
-        {onBuy && (
-          <Button
-            size="sm"
-            variant="outline"
-            disabled={!isLoggedIn}
-            onClick={() => onBuy(product)}
-            className={compact ? "px-2 py-1.5 text-xs" : undefined}
-          >
-            Buy
-          </Button>
-        )}
+
       </div>
     </article>
   );

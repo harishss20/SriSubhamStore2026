@@ -56,6 +56,7 @@ export interface Order {
   total: number;
   shippingAddress: string;
   contactPhone?: string;
+  status?: string; // pending, shipped, delivered, etc.
   createdAt: string;
 }
 

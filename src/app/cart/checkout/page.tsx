@@ -101,6 +101,7 @@ export default function CheckoutPage() {
 
             <div className="space-y-4">
               <h2 className="text-2xl font-semibold">Contact Information</h2>
+              <p className="text-base text-zinc-800">{user.name || user.email}</p>
               <input
                 value={mobile}
                 onChange={(e) => setMobile(e.target.value)}
