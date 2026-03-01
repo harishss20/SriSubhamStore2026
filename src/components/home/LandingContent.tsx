@@ -103,15 +103,6 @@ const heroSection = [
     ]
   },
   {
-    "id": "Aavin-Mysorepa-250gm",
-    "name": "Aavin Mysorepa 250gm",
-    "description": "*Aavin Mysorepa* is a rich, soft traditional sweet made with quality ingredients, offering a melt-in-the-mouth taste perfect for festive moments.",
-    "price": 140,
-    "images": [
-      "/products/mysoopa1.png"
-    ]
-  },
-  {
     "id": "Aavin-Gulab-Jamun",
     "name": "Aavin Gulab Jamun 3g",
     "description": "*Aavin Gulab Jamun* is a soft, rich traditional sweet made from quality milk solids, perfect for desserts and celebrations.",

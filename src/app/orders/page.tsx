@@ -16,8 +16,7 @@ export default function OrdersPage() {
       .catch(console.error);
   }, []);
 
-  if (!orders) return <p className="text-center py-20">Loading orders...</p>;
-  if (orders.length === 0)
+  if (orders && orders.length === 0)
     return <p className="text-center py-20">You have no orders yet.</p>;
 
   const capitalize = (s?: string) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : "");
@@ -26,7 +25,7 @@ export default function OrdersPage() {
     <div className="container mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold mb-8">My Orders</h1>
       <ul className="space-y-6">
-        {orders.map((o) => (
+        {orders?.map((o) => (
           <li
             key={o._id}
             className="border rounded-xl p-6 bg-white shadow-sm"
