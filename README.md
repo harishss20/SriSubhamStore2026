@@ -32,6 +32,7 @@ GET  /api/order/:id
 ```
 MONGODB_URI=your_connection_string  # e.g. mongodb+srv://user:password@cluster.mongodb.net/dbname
                                      # make sure to replace any `<placeholders>`
+                                     # also whitelist your local IP in Atlas network settings
 AUTH_SECRET=a_long_secret_for_jwt
 ```
 

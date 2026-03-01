@@ -1,8 +1,10 @@
-import { useRouter } from "next/navigation";
+"use client";
+
 import { useEffect, useState } from "react";
+import { Order } from "@/types";
 
 export default function OrderPage({ params }: { params: { id: string } }) {
-  const [order, setOrder] = useState<any>(null);
+  const [order, setOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     fetch(`/api/order/${params.id}`)

@@ -10,9 +10,15 @@ export function useAuth() {
     fetch("/api/auth/session")
       .then((r) => r.json())
       .then((data) => {
+        if (data.error) {
+          console.error("session error response", data);
+        }
         setUser(data.user ?? null);
       })
-      .catch(() => setUser(null))
+      .catch((err) => {
+        console.error("session fetch failed", err);
+        setUser(null);
+      })
       .finally(() => setLoading(false));
   }, [setUser, setLoading]);
 

@@ -50,3 +50,12 @@ export interface SignupCredentials extends LoginCredentials {
   address?: Address;
 }
 
+export interface Order {
+  _id: string;
+  items: CartItem[];
+  total: number;
+  shippingAddress: string;
+  contactPhone?: string;
+  createdAt: string;
+}
+
