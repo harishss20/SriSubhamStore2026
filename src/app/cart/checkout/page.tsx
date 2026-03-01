@@ -15,7 +15,6 @@ export default function CheckoutPage() {
   const router = useRouter();
 
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
-  const [customAddress, setCustomAddress] = useState<string | null>(null);
   const [mobile, setMobile] = useState("");
   const [error, setError] = useState("");
   const [errorModal, setErrorModal] = useState(false);
@@ -39,22 +38,25 @@ export default function CheckoutPage() {
     return null;
   }
 
+  const chosenAddress =
+    user.addresses?.find((a: Address) => a._id === selectedAddressId)?.value ||
+    "";
+
   const placeOrder = async () => {
     setError("");
     setErrorModal(false);
     setLoadingOrder(true);
-    let address: string | undefined;
-    if (customAddress) address = customAddress;
-    else {
-      address = user.addresses?.find(
-        (a: Address) => a._id === selectedAddressId
-      )?.value;
-    }
+
+    const address = user.addresses?.find(
+      (a: Address) => a._id === selectedAddressId
+    )?.value;
+
     if (!address) {
-      setError("Please select or enter an address");
+      setError("Please select or enter a delivery address");
       setLoadingOrder(false);
       return;
     }
+
     const res = await fetch("/api/checkout", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,7 +67,9 @@ export default function CheckoutPage() {
         contactPhone: mobile,
       }),
     });
+
     const data = await res.json();
+
     if (data.success) {
       clearCart();
       setOrderPlaced(true);
@@ -73,148 +77,128 @@ export default function CheckoutPage() {
       setError(data.error || "Failed to place order");
       setErrorModal(true);
     }
+
     setLoadingOrder(false);
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12 bg-zinc-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-10 text-[#3D9AC3]">
-        Checkout
-      </h1>
+    <div className="min-h-screen bg-linear-to-br from-zinc-50 via-white to-zinc-100 py-16 px-4">
+      <div className="max-w-7xl mx-auto">
 
-      {error && (
-        <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm">
-          {error}
-        </div>
-      )}
+        <h1 className="text-4xl font-bold text-center mb-14 tracking-tight text-zinc-900">
+          Secure Checkout
+        </h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <section className="bg-white p-8 rounded-2xl shadow-md border lg:sticky lg:top-24 h-fit">
-          <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
-          <div className="space-y-6">
-            {items.map((item) => (
-              <div key={item.id} className="flex gap-4 border-b pb-4">
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-zinc-100">
-                  <img
-                    src={item.images?.[0] || ""}
-                    alt={item.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium text-zinc-900">
-                    {item.name}
-                  </h3>
-                  <p className="text-sm text-zinc-600">
-                    {item.quantity} × {formatPrice(item.price)}
-                  </p>
-                </div>
-                <p className="font-semibold text-zinc-900">
-                  {formatPrice(item.price * item.quantity)}
+        {error && (
+          <div className="mb-8 p-4 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm text-center">
+            {error}
+          </div>
+        )}
+
+        <div className="grid lg:grid-cols-3 gap-10">
+
+          <div className="lg:col-span-2 bg-white rounded-3xl shadow-xl border border-zinc-200 p-10 space-y-12">
+
+            <div className="space-y-4">
+              <h2 className="text-2xl font-semibold">Contact Information</h2>
+              <input
+                value={mobile}
+                onChange={(e) => setMobile(e.target.value)}
+                placeholder="Mobile number"
+                className="w-full rounded-xl border border-zinc-300 px-5 py-4 focus:ring-2 focus:ring-black focus:outline-none transition"
+              />
+            </div>
+
+            <div className="space-y-6">
+              <h2 className="text-2xl font-semibold">Our Address</h2>
+
+              <div className="rounded-2xl border border-zinc-200 bg-zinc-50 p-6 shadow-sm">
+                <p className="font-semibold text-zinc-900 text-lg">
+                  No. 89, Aranmanai Street
                 </p>
+                <p className="text-zinc-700 mt-1">Vadakarai</p>
+                <p className="text-zinc-700">Periyakulam – 625601</p>
+                <p className="text-zinc-500 text-sm mt-2">Tamil Nadu, India</p>
               </div>
-            ))}
-            <div className="pt-6 border-t">
-              <div className="flex justify-between text-lg font-semibold">
-                <span>Total</span>
-                <span>{formatPrice(getTotalPrice())}</span>
-              </div>
+
             </div>
           </div>
-        </section>
 
-        <div className="lg:col-span-2 space-y-8">
-          <section className="bg-white p-8 rounded-2xl shadow-md border space-y-4">
-            <h2 className="text-xl font-semibold">Contact</h2>
-            <input
-              className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#3D9AC3] focus:outline-none"
-              value={mobile}
-              onChange={(e) => setMobile(e.target.value)}
-              placeholder="Mobile number"
-            />
-          </section>
+          <div className="bg-white rounded-3xl shadow-2xl border border-zinc-200 p-8 h-fit sticky top-24">
 
-          <section className="bg-white p-8 rounded-2xl shadow-md border space-y-6">
-            <h2 className="text-xl font-semibold">Shipping Address</h2>
-            {user.addresses && user.addresses.length > 0 && (
-              <div className="space-y-4">
-                {user.addresses.map((a: Address) => (
-                  <label
-                    key={a._id}
-                    className={`block p-4 rounded-xl border transition cursor-pointer ${
-                      selectedAddressId === a._id
-                        ? "border-[#3D9AC3] bg-[#3D9AC3]/5"
-                        : "hover:bg-zinc-50"
-                    }`}
-                  >
-                    <input
-                      type="radio"
-                      name="address"
-                      checked={selectedAddressId === a._id}
-                      onChange={() =>
-                        setSelectedAddressId(a._id || null)
-                      }
-                      className="mr-3 accent-[#3D9AC3]"
-                    />
-                    <span>{a.value}</span>
-                  </label>
-                ))}
+            <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+
+            {chosenAddress && (
+              <div className="mb-6 text-sm text-zinc-700 leading-relaxed">
+                <p className="font-medium text-zinc-900 mb-2">
+                  Delivering to:
+                </p>
+                <div>
+                  {chosenAddress.split("\n").map((line: string, i: number) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
               </div>
             )}
 
-            <textarea
-              className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-[#3D9AC3] focus:outline-none"
-              rows={3}
-              placeholder="Or enter new address"
-              value={customAddress || ""}
-              onChange={(e) => setCustomAddress(e.target.value)}
-            />
-          </section>
+            <div className="space-y-4 max-h-80 overflow-y-auto pr-2">
+              {items.map((item) => (
+                <div key={item.id} className="flex justify-between text-sm">
+                  <span>
+                    {item.name} × {item.quantity}
+                  </span>
+                  <span>
+                    {formatPrice(item.price * item.quantity)}
+                  </span>
+                </div>
+              ))}
+            </div>
 
-          <section className="bg-white p-6 rounded-2xl shadow-md border flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-lg font-semibold">
-              Total: {formatPrice(getTotalPrice())}
-            </p>
+            <div className="border-t mt-6 pt-6 flex justify-between text-lg font-semibold">
+              <span>Total</span>
+              <span>{formatPrice(getTotalPrice())}</span>
+            </div>
+
+            <div className="mt-6 p-4 rounded-2xl bg-green-50 border border-green-300 text-green-800 text-center font-semibold text-sm tracking-wide">
+              💵 Cash or UPI accepted only at the time of delivery. No online payments.
+            </div>
+
             <Button
               onClick={placeOrder}
-              className="px-10 py-3"
               disabled={loadingOrder}
+              className="w-full mt-8 py-4 text-base"
             >
-              {loadingOrder ? "Placing…" : "Place order"}
+              {loadingOrder ? "Placing Order..." : "Place Order"}
             </Button>
-          </section>
+
+          </div>
         </div>
+
+        <Modal
+          isOpen={errorModal}
+          onClose={() => setErrorModal(false)}
+          title="Checkout Error"
+        >
+          <p className="text-red-600">{error}</p>
+          <div className="mt-4 text-center">
+            <Button onClick={() => setErrorModal(false)}>Close</Button>
+          </div>
+        </Modal>
+
+        <Modal
+          isOpen={orderPlaced}
+          onClose={() => router.push("/")}
+          title="Order Successful"
+        >
+          <p>Your order has been placed successfully!</p>
+          <div className="mt-4 text-center">
+            <Button onClick={() => router.push("/")}>
+              Go to Home
+            </Button>
+          </div>
+        </Modal>
+
       </div>
-
-      <Modal
-        isOpen={errorModal}
-        onClose={() => setErrorModal(false)}
-        title="Checkout Error"
-      >
-        <p className="text-red-600">{error}</p>
-        <div className="mt-4 text-center">
-          <Button onClick={() => setErrorModal(false)}>Close</Button>
-        </div>
-      </Modal>
-
-      <Modal
-        isOpen={orderPlaced}
-        onClose={() => router.push("/")}
-        title="Order Successful"
-      >
-        <p>Your order has been placed successfully!</p>
-        <p className="mt-2 text-sm text-zinc-600">
-          Our delivery partner will contact you soon with the details.
-        </p>
-        <p className="mt-2 text-sm text-zinc-500">
-          You will be redirected to the home page when you close this message.
-        </p>
-        <div className="mt-4 text-center">
-          <Button onClick={() => router.push("/")}>
-            Go to Home
-          </Button>
-        </div>
-      </Modal>
     </div>
   );
 }

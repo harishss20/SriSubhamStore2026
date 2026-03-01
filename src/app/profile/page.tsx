@@ -79,6 +79,15 @@ export default function ProfilePage() {
 
         <div className="space-y-4">
           <div>
+            <label className="block text-sm font-medium mb-1">Email</label>
+            <input
+              className="w-full border rounded-lg px-4 py-2 bg-zinc-100 cursor-not-allowed"
+              value={user.email}
+              readOnly
+            />
+          </div>
+
+          <div>
             <label className="block text-sm font-medium mb-1">Name</label>
             <input
               className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#3D9AC3]"
