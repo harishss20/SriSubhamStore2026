@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { APP_CONFIG, ROUTES } from "@/lib/constants";
+
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -36,7 +37,7 @@ export function Footer() {
               href={ROUTES.terms}
               className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
             >
-              Terms
+              Terms & Conditions
             </Link>
             <Link
               href={ROUTES.privacy}
