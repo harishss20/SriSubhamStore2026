@@ -1,100 +1,93 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 
 import { createPortal } from "react-dom";
 import { resolveImageUrl } from "@/lib/utils";
 
 interface ImageSliderProps {
-  images: string[];
+  image: string;
   alt: string;
   className?: string;
-  autoSlideInterval?: number;
 }
 
-export function ImageSlider({
-  images,
-  alt,
-  className = "",
-  autoSlideInterval = 3000,
-}: ImageSliderProps) {
-  const [current, setCurrent] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
+export function ImageSlider({ image, alt, className = "" }: ImageSliderProps) {
   const [isZoomOpen, setIsZoomOpen] = useState(false);
+  const [showLens, setShowLens] = useState(false);
+  const [lensStyle, setLensStyle] = useState({ left: 0, top: 0 });
+  const [zoomedStyle, setZoomedStyle] = useState({ backgroundPosition: "0% 0%" });
 
-  const total = images.length;
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const next = () => setCurrent((c) => (c + 1) % total);
-  const prev = () => setCurrent((c) => (c - 1 + total) % total);
+  const zoomLevel = 2.8;
+  const lensSize = 140;
 
-  useEffect(() => {
-    if (total <= 1 || isHovered || isZoomOpen) return;
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
 
-    const interval = setInterval(() => {
-      setCurrent((c) => (c + 1) % total);
-    }, autoSlideInterval);
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    return () => clearInterval(interval);
-  }, [total, autoSlideInterval, isHovered, isZoomOpen]);
+    let lensX = x - lensSize / 2;
+    let lensY = y - lensSize / 2;
 
-  if (!images.length) return null;
+    lensX = Math.max(0, Math.min(lensX, rect.width - lensSize));
+    lensY = Math.max(0, Math.min(lensY, rect.height - lensSize));
+
+    setLensStyle({ left: lensX, top: lensY });
+
+    const bgX = (lensX / (rect.width - lensSize)) * 100;
+    const bgY = (lensY / (rect.height - lensSize)) * 100;
+
+    setZoomedStyle({
+      backgroundPosition: `${bgX}% ${bgY}%`,
+    });
+  };
+
+  const imageUrl = resolveImageUrl(image);
 
   return (
     <>
       <div
-        className={`group relative size-full overflow-hidden bg-zinc-100 cursor-zoom-in ${className}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        ref={containerRef}
+        className={`relative size-full overflow-hidden bg-white cursor-crosshair ${className}`}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setShowLens(true)}
+        onMouseLeave={() => setShowLens(false)}
         onClick={() => setIsZoomOpen(true)}
       >
         <img
-          src={resolveImageUrl(images[current])}
-          alt={`${alt} - image ${current + 1}`}
-          className="size-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+          src={imageUrl}
+          alt={alt}
+          className="size-full object-cover bg-white"
+          draggable={false}
         />
 
-        {total > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                prev();
-              }}
-              className="absolute left-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/95 shadow-md flex items-center justify-center hover:bg-white text-sm transition-all duration-200 hover:scale-110 active:scale-95 border border-zinc-200/50"
-            >
-              ←
-            </button>
+        {showLens && (
+          <div
+            className="absolute border-2 border-white/80 bg-black/10 pointer-events-none z-10"
+            style={{
+              width: lensSize,
+              height: lensSize,
+              left: lensStyle.left,
+              top: lensStyle.top,
+            }}
+          />
+        )}
 
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                next();
+        {showLens && (
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-20">
+            <div
+              className="w-72 h-72 md:w-96 md:h-96 border-4 border-white rounded-xl overflow-hidden shadow-2xl bg-white"
+              style={{
+                backgroundImage: `url(${imageUrl})`,
+                backgroundSize: `${zoomLevel * 100}%`,
+                backgroundPosition: zoomedStyle.backgroundPosition,
+                backgroundRepeat: "no-repeat",
               }}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/95 shadow-md flex items-center justify-center hover:bg-white text-sm transition-all duration-200 hover:scale-110 active:scale-95 border border-zinc-200/50"
-            >
-              →
-            </button>
-
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-              {images.map((_, i) => (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setCurrent(i);
-                  }}
-                  className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
-                    i === current
-                      ? "bg-[#3D9AC3] scale-125"
-                      : "bg-white/70 hover:bg-white/90"
-                  }`}
-                />
-              ))}
-            </div>
-          </>
+            />
+          </div>
         )}
       </div>
 
@@ -102,44 +95,14 @@ export function ImageSlider({
         typeof window !== "undefined" &&
         createPortal(
           <div
-            className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center"
+            className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center"
             onClick={() => setIsZoomOpen(false)}
           >
-            <div
-              className="relative w-full max-w-3xl h-[80vh] flex items-center justify-center p-6"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img
-                src={resolveImageUrl(images[current])}
-                alt={`${alt} zoom`}
-                className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
-              />
-
-              <button
-                onClick={() => setIsZoomOpen(false)}
-                className="absolute top-4 right-4 bg-white text-black w-8 h-8 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition"
-              >
-                ✕
-              </button>
-
-              {total > 1 && (
-                <>
-                  <button
-                    onClick={prev}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition"
-                  >
-                    ←
-                  </button>
-
-                  <button
-                    onClick={next}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-110 transition"
-                  >
-                    →
-                  </button>
-                </>
-              )}
-            </div>
+            <img
+              src={imageUrl}
+              alt={alt}
+              className="max-h-[90vh] max-w-full object-contain rounded-xl bg-white"
+            />
           </div>,
           document.body
         )}

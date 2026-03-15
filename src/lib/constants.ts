@@ -19,6 +19,7 @@ export const ROUTES = {
   privacy: "/privacy",
   returns: "/returns",
   shipping: "/shipping",
+  payment: "/payment",
 } as const;
 
 export const API_ROUTES = {

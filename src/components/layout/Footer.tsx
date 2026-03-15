@@ -46,6 +46,12 @@ export function Footer() {
               Privacy
             </Link>
             <Link
+              href={ROUTES.payment}
+              className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
+            >
+              Payment Policy
+            </Link>
+            <Link
               href={ROUTES.returns}
               className="text-sm font-medium text-zinc-600 transition-colors hover:text-[#3D9AC3]"
             >

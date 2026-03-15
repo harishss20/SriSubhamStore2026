@@ -10,71 +10,66 @@ import { useState } from "react";
 interface ProductCardProps {
   product: Product;
   onAddToCart: (product: Product) => void;
-  onBuy?: (product: Product) => void;
-  isLoggedIn?: boolean;
-  index?: number;
-  compact?: boolean;
 }
 
-export function ProductCard({
-  product,
-  onAddToCart,
-  onBuy,
-  isLoggedIn = false,
-  index = 0,
-  compact = false,
-}: ProductCardProps) {
-  const [added, setAdded] = useState(false);
+export function ProductCard({ product, onAddToCart }: ProductCardProps) {
+  const [current, setCurrent] = useState(0);
   const images = product.images?.length ? product.images : [""];
 
-  const handleAddToCart = () => {
-    onAddToCart(product);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1500);
-  };
+  const next = () => setCurrent((p) => (p + 1) % images.length);
+  const prev = () => setCurrent((p) => (p - 1 + images.length) % images.length);
 
   return (
-    <article
-      className={cn(
-        "group relative overflow-hidden rounded-xl border border-zinc-200/80 bg-white shadow-sm",
-        "transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[#3D9AC3]/30",
-        "animate-[fade-in-up_0.5s_ease-out_both]",
-        compact ? "p-3" : "p-5"
-      )}
-      style={{ animationDelay: `${index * 50}ms` }}
-    >
-      <div
-        className={cn(
-          "aspect-square overflow-hidden rounded-lg bg-zinc-100 transition-transform duration-500 group-hover:scale-[1.02]",
-          compact ? "mb-2" : "mb-4 rounded-xl"
-        )}
-      >
-        <ImageSlider images={images} alt={product.name} className="w-full h-full" />
+    <article className="group overflow-hidden rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">
+
+      <div className="aspect-square overflow-hidden rounded-xl bg-zinc-100">
+        <ImageSlider
+          image={images[current]}
+          alt={product.name}
+          className="w-full h-full"
+        />
       </div>
-      <h3
-        className={cn(
-          "truncate font-semibold text-zinc-900 transition-colors duration-200 group-hover:text-[#3D9AC3]",
-          compact ? "mb-0.5 text-sm" : "mb-1 text-lg"
-        )}
-      >
+
+      {images.length > 1 && (
+        <div className="flex items-center justify-center gap-4 mt-3">
+          <button
+            onClick={prev}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 bg-white shadow hover:bg-zinc-50"
+          >
+            ←
+          </button>
+
+          <span className="text-sm text-zinc-500">
+            {current + 1} / {images.length}
+          </span>
+
+          <button
+            onClick={next}
+            className="w-9 h-9 flex items-center justify-center rounded-full border border-zinc-200 bg-white shadow hover:bg-zinc-50"
+          >
+            →
+          </button>
+        </div>
+      )}
+
+      <h3 className="mt-4 text-lg font-semibold text-zinc-900">
         {product.name}
       </h3>
-      <p className={cn("line-clamp-2 text-zinc-500", compact ? "text-xs" : "text-sm")}>
+
+      <p className="text-sm text-zinc-500 line-clamp-2">
         {product.description}
       </p>
-      <p className={cn("font-semibold text-[#3D9AC3]", compact ? "mt-1 text-sm" : "mt-2 text-base")}>
+
+      <p className="mt-2 font-semibold text-[#3D9AC3]">
         {formatPrice(product.price)}
       </p>
-      <div className={cn("flex flex-wrap gap-1.5", compact ? "mt-3" : "mt-5")}>
-        <Button
-          size="sm"
-          onClick={handleAddToCart}
-          className={compact ? "min-w-0 flex-1 px-2 py-1.5 text-xs" : "min-w-[100px] flex-1"}
-        >
-          {added ? "Added ✓" : "Add"}
-        </Button>
 
-      </div>
+      <Button
+        onClick={() => onAddToCart(product)}
+        className="mt-4 w-full"
+      >
+        Add
+      </Button>
     </article>
   );
 }
